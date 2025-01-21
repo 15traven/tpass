@@ -75,6 +75,7 @@ fn main() {
                     TrayIconBuilder::new()
                         .with_menu(Box::new(tray_menu.clone()))
                         .with_icon(dark_icon.clone())
+                        .with_tooltip("password generator")
                         .build()
                         .unwrap()
                 );
