@@ -10,11 +10,9 @@ use tao::{
 };
 use tray_icon::{
     menu::{
-        AboutMetadata,
-        Menu,
-        MenuEvent,
-        MenuItem,
-        PredefinedMenuItem,
+        AboutMetadata, CheckMenuItem, Menu, 
+        MenuEvent, MenuItem, PredefinedMenuItem, 
+        Submenu
     },
     Icon,
     TrayIcon,
@@ -37,11 +35,17 @@ fn main() {
         let _ = proxy.send_event(UserEvent::MenuEvent(event));
     }));
 
-    let tray_menu = Menu::new();
-    let generate_item = MenuItem::new("Generate", true, None);
-    let quit_item = MenuItem::new("Quit", true, None);
-    let _ = tray_menu.append_items(&[
-        &generate_item,
+    let configure_sub_menu = Submenu::new("Configure", true);
+    let use_lower_item = CheckMenuItem::new("Use lowercase", true, true, None);
+    let use_upper_item = CheckMenuItem::new("Use uppercase", true, true, None);
+    let use_numbers_item = CheckMenuItem::new("Use numbers", true, true, None);
+    let use_special_item = CheckMenuItem::new("Use symbols", true, true, None);
+    let _ = configure_sub_menu.append_items(&[
+        &use_lower_item,
+        &use_upper_item,
+        &use_numbers_item,
+        &use_special_item,
+        &PredefinedMenuItem::separator(),
         &PredefinedMenuItem::about(
             None,
             Some(AboutMetadata {
@@ -50,6 +54,14 @@ fn main() {
                 ..Default::default()
             })
         ),
+    ]);
+
+    let tray_menu = Menu::new();
+    let generate_item = MenuItem::new("Generate", true, None);
+    let quit_item = MenuItem::new("Quit", true, None);
+    let _ = tray_menu.append_items(&[
+        &generate_item,
+        &configure_sub_menu,
         &PredefinedMenuItem::separator(),
         &quit_item
     ]);
