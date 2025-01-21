@@ -14,7 +14,6 @@ use tray_icon::{
         MenuEvent, MenuItem, PredefinedMenuItem, 
         Submenu
     },
-    Icon,
     TrayIcon,
     TrayIconBuilder,
 };
@@ -36,15 +35,15 @@ fn main() {
     }));
 
     let configure_sub_menu = Submenu::new("Configure", true);
-    let use_lower_item = CheckMenuItem::new("Use lowercase", true, true, None);
-    let use_upper_item = CheckMenuItem::new("Use uppercase", true, true, None);
+    let use_lowercase_item = CheckMenuItem::new("Use lowercase", true, true, None);
+    let use_uppercase_item = CheckMenuItem::new("Use uppercase", true, true, None);
     let use_numbers_item = CheckMenuItem::new("Use numbers", true, true, None);
-    let use_special_item = CheckMenuItem::new("Use symbols", true, true, None);
+    let use_symbols_item = CheckMenuItem::new("Use symbols", true, true, None);
     let _ = configure_sub_menu.append_items(&[
-        &use_lower_item,
-        &use_upper_item,
+        &use_lowercase_item,
+        &use_uppercase_item,
         &use_numbers_item,
-        &use_special_item,
+        &use_symbols_item,
         &PredefinedMenuItem::separator(),
         &PredefinedMenuItem::about(
             None,
@@ -81,6 +80,16 @@ fn main() {
                 );
             }
             Event::UserEvent(UserEvent::MenuEvent(event)) => {
+                if event.id == generate_item.id() {
+                    helpers::generate_password(
+                        16, 
+                        use_lowercase_item.is_checked(), 
+                        use_uppercase_item.is_checked(), 
+                        use_numbers_item.is_checked(),
+                        use_symbols_item.is_checked()
+                    );
+                }
+
                 if event.id == quit_item.id() {
                     tray_icon.take();
                     *control_flow = ControlFlow::Exit;
