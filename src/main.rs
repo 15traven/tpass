@@ -79,6 +79,8 @@ fn main() {
                         .build()
                         .unwrap()
                 );
+
+                helpers::autorun();
             }
             Event::UserEvent(UserEvent::MenuEvent(event)) => {
                 if event.id == generate_item.id() {
