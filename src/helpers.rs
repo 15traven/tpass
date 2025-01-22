@@ -1,7 +1,20 @@
-use std::{collections::HashSet, env, path::Path};
+use std::{
+    collections::HashSet,
+    path::Path,
+};
+use native_dialog::MessageDialog;
 use rand::seq::SliceRandom;
-use clipboard::{ClipboardContext, ClipboardProvider};
-use winreg::{enums::{HKEY_CURRENT_USER, KEY_WRITE}, RegKey};
+use clipboard::{
+    ClipboardContext, 
+    ClipboardProvider,
+};
+use winreg::{
+    enums::{
+        HKEY_CURRENT_USER, 
+        KEY_WRITE
+    }, 
+    RegKey
+};
 
 pub fn load_icon(path: &std::path::Path) -> tray_icon::Icon {
     let (icon_rgba, icon_width, icon_height) = {
@@ -22,7 +35,7 @@ pub fn load_icon(path: &std::path::Path) -> tray_icon::Icon {
 }
 
 pub fn autorun() {
-    let exe_path = env::current_exe()
+    let exe_path = std::env::current_exe()
         .unwrap()
         .into_os_string()
         .into_string()
@@ -60,11 +73,21 @@ pub fn generate_password(
     if use_symbols {
         character_pool.extend("!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~".chars());
     }
+
+    if character_pool.is_empty() {
+        let _ = MessageDialog::new()
+            .set_type(native_dialog::MessageType::Error)
+            .set_title("Error")
+            .set_text("Character pool cannot be empty")
+            .show_alert()
+            .unwrap();
+        return;
+    }
     
     let character_pool: Vec<char> = character_pool.into_iter().collect();
     let password: String = (0..length)
         .map(|_| {
-            *character_pool.choose(&mut rand::thread_rng()).expect("Character pool cannot be empty")
+            *character_pool.choose(&mut rand::thread_rng()).unwrap()
         })
         .collect();
 

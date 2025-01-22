@@ -11,6 +11,7 @@ FileDescription = "A simple password generator with a system tray icon"
 [dependencies]
 clipboard = "0.5.0"
 image = "0.25.5"
+native-dialog = "0.7.0"
 rand = "0.8.5"
 tao = "0.31.1"
 tray-icon = { path="crates/tray-icon" }
