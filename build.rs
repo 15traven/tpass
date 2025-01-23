@@ -8,6 +8,7 @@ fn main( ) {
             winapi::um::winnt::LANG_ENGLISH,
             winapi::um::winnt::SUBLANG_ENGLISH_US
         ));
+        res.set_icon("./assets/icon.ico");
         res.compile().unwrap();
     }
 }

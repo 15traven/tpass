@@ -25,7 +25,7 @@ enum UserEvent {
 }
 
 fn main() {
-    let dark_icon_path = concat!(env!("CARGO_MANIFEST_DIR"), "/assets/dark_icon.png");
+    let dark_icon_path = concat!(env!("CARGO_MANIFEST_DIR"), "/assets/icon.ico");
     let dark_icon = load_icon(std::path::Path::new(dark_icon_path));
 
     let event_loop = EventLoopBuilder::<UserEvent>::with_user_event().build();
