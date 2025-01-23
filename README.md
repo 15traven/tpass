@@ -1,6 +1,7 @@
 # TPass
-![cover](/assets/cover.png)
+<img src="./assets/cover.png" width=100% height=100%>
 
-A simple password generator with a system tray icon. <br />
-When the user clicks on the icon, it provides the option <br />
+<br />
+A simple password generator with a system tray icon.
+When the user clicks on the icon, it provides the option
 to generate a random password and copy it to the clipboard.
